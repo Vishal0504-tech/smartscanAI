@@ -1,0 +1,5 @@
+{
+  "name": "SmartScan AI",
+  "description": "A full-stack AI-powered OCR application that extracts text from any image with high precision using Gemini 1.5 Flash.",
+  "requestFramePermissions": ["camera"]
+}
