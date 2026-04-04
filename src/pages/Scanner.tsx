@@ -17,7 +17,16 @@ const modes = [
   { id: "ticket", icon: Ticket, label: "Ticket", description: "Structured info" },
 ];
 
-const languages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Hindi", "Arabic"];
+const languages = ["English", "Spanish", "French", "German", "Chinese", "Japanese", "Hindi", "Arabic", "Tamil"];
+
+const fileToBase64 = (file: File | Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
 
 export default function Scanner() {
   const [file, setFile] = useState<File | null>(null);
@@ -142,11 +151,14 @@ export default function Scanner() {
     try {
       const result = await processImage(file, mode, mode === "translate" ? targetLang : undefined);
       
+      // Convert image to base64 for persistent history
+      const base64Image = await fileToBase64(file);
+
       // Save to history (localStorage)
       const history = JSON.parse(localStorage.getItem("scan_history") || "[]");
       const newEntry = {
         id: Date.now().toString(),
-        image: preview,
+        image: base64Image,
         result: result.extractedText,
         mode: result.mode,
         timestamp: result.timestamp,
