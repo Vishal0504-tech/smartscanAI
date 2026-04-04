@@ -43,21 +43,37 @@ export default function Scanner() {
   }, [stream]);
 
   const startCamera = async () => {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      setError("Camera access is not supported by your browser or environment.");
+      return;
+    }
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ 
         video: { facingMode: "environment" } 
       });
       setStream(mediaStream);
-      if (videoRef.current) {
-        videoRef.current.srcObject = mediaStream;
-      }
       setIsCameraOpen(true);
       setError(null);
-    } catch (err) {
-      setError("Could not access camera. Please check permissions.");
+    } catch (err: any) {
+      if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
+        setError("Camera access was denied. Please click the camera icon in your browser's address bar to allow access. If you're in a preview window, try opening the app in a new tab.");
+      } else if (err.name === "NotFoundError" || err.name === "DevicesNotFoundError") {
+        setError("No camera found on this device. Please ensure a camera is connected.");
+      } else {
+        setError(`Could not access camera: ${err.message || "Unknown error"}. Try opening the app in a new tab.`);
+      }
       console.error("Camera error:", err);
     }
   };
+
+  useEffect(() => {
+    if (isCameraOpen && stream && videoRef.current) {
+      videoRef.current.srcObject = stream;
+      videoRef.current.play().catch(err => {
+        console.error("Error playing video:", err);
+      });
+    }
+  }, [isCameraOpen, stream]);
 
   const stopCamera = () => {
     if (stream) {
@@ -171,6 +187,8 @@ export default function Scanner() {
                   ref={videoRef}
                   autoPlay
                   playsInline
+                  muted
+                  onLoadedMetadata={() => videoRef.current?.play()}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute bottom-8 left-0 right-0 flex justify-center gap-4 px-4">
@@ -222,6 +240,7 @@ export default function Scanner() {
                 <div className="space-y-1">
                   <p className="text-lg font-bold text-slate-900">Scan or Upload Image</p>
                   <p className="text-slate-500 text-sm">Capture a photo of your document or drag & drop</p>
+                  <p className="text-[10px] text-slate-400 mt-2 italic">Note: Camera access requires browser permission.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                   <button
@@ -255,9 +274,17 @@ export default function Scanner() {
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium border border-red-100"
+              className="p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-medium border border-red-100 flex flex-col gap-3"
             >
-              {error}
+              <p>{error}</p>
+              {error.includes("Camera access") && (
+                <button
+                  onClick={startCamera}
+                  className="w-fit px-4 py-1.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                >
+                  Try Again
+                </button>
+              )}
             </motion.div>
           )}
         </div>

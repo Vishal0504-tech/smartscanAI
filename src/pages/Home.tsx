@@ -52,9 +52,7 @@ export default function Home() {
           Turn your images into <span className="text-indigo-600">structured data</span>
         </h1>
         
-        <p className="text-xl text-slate-600 leading-relaxed">
-          SmartScan AI uses Gemini 1.5 Flash to extract, format, and translate text from any image—printed, handwritten, or captured directly via your camera—with unprecedented precision.
-        </p>
+         
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
           <Link
@@ -115,17 +113,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-700/50">
-            <div className="space-y-4">
-              <div className="h-4 w-3/4 bg-slate-700 rounded-full animate-pulse"></div>
-              <div className="h-4 w-full bg-slate-700 rounded-full animate-pulse"></div>
-              <div className="h-4 w-5/6 bg-slate-700 rounded-full animate-pulse"></div>
-              <div className="h-4 w-2/3 bg-slate-700 rounded-full animate-pulse"></div>
-              <div className="pt-4 flex justify-end">
-                <div className="px-4 py-2 bg-indigo-600 rounded-xl text-sm font-bold">Scanning...</div>
-              </div>
-            </div>
-          </div>
+          
         </div>
       </section>
     </div>
