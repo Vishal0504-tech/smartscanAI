@@ -189,12 +189,12 @@ export default function Scanner() {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             className={cn(
-              "relative aspect-[4/3] rounded-[2rem] border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-hidden",
+              "relative aspect-[4/3] rounded-[2rem] border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-200 overscroll-contain",
               (preview || isCameraOpen) ? "border-indigo-200 bg-slate-50" : "border-slate-200 bg-white hover:border-indigo-400 hover:bg-slate-50"
             )}
           >
             {isCameraOpen ? (
-              <div className="relative w-full h-full bg-black">
+              <div className="relative w-full h-full bg-black flex-shrink-0">
                 <video
                   ref={videoRef}
                   autoPlay
@@ -220,7 +220,7 @@ export default function Scanner() {
                 </div>
               </div>
             ) : preview ? (
-              <>
+              <div className="relative w-full h-full flex items-center justify-center flex-shrink-0">
                 <img src={preview} alt="Preview" className="w-full h-full object-contain" />
                 <div className="absolute top-4 right-4 flex gap-2">
                   <button
@@ -238,9 +238,9 @@ export default function Scanner() {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-              </>
+              </div>
             ) : (
-              <div className="text-center space-y-6 p-8">
+              <div className="text-center space-y-6 p-8 min-h-full flex flex-col items-center justify-center">
                 <div className="flex justify-center gap-4">
                   <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
                     <Upload className="w-8 h-8" />
@@ -254,7 +254,7 @@ export default function Scanner() {
                   <p className="text-slate-500 text-sm">Capture a photo of your document or drag & drop</p>
                   <p className="text-[10px] text-slate-400 mt-2 italic">Note: Camera access requires browser permission.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
                   <button
                     onClick={startCamera}
                     className="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
