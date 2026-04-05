@@ -189,7 +189,7 @@ export default function Scanner() {
             onDragOver={(e) => e.preventDefault()}
             onDrop={handleDrop}
             className={cn(
-              "relative aspect-[4/3] rounded-[2rem] border-2 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-200 overscroll-contain",
+              "relative aspect-[6/4] rounded-[2rem] border-3 border-dashed transition-all duration-300 flex flex-col items-center justify-center overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-200 overscroll-contain",
               (preview || isCameraOpen) ? "border-indigo-200 bg-slate-50" : "border-slate-200 bg-white hover:border-indigo-400 hover:bg-slate-50"
             )}
           >
@@ -240,43 +240,50 @@ export default function Scanner() {
                 </div>
               </div>
             ) : (
-              <div className="text-center space-y-6 p-8 min-h-full flex flex-col items-center justify-center">
-                <div className="flex justify-center gap-4">
-                  <div className="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center">
-                    <Upload className="w-8 h-8" />
+              <div className="w-full min-h-full flex flex-col">
+                {/* Sticky Header inside the container */}
+                <div className="sticky top-0 z-10 bg-white/80 backdrop-blur-md p-6 pb-4 flex flex-col items-center space-y-4 border-b border-slate-50">
+                  <div className="flex justify-center gap-4">
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center shadow-sm">
+                      <Upload className="w-6 h-6 sm:w-8 sm:h-8" />
+                    </div>
+                    <div className="w-12 h-12 sm:w-16 sm:h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center shadow-sm">
+                      <Camera className="w-6 h-6 sm:w-8 sm:h-8" />
+                    </div>
                   </div>
-                  <div className="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center">
-                    <Camera className="w-8 h-8" />
+                  <div className="text-center space-y-1">
+                    <p className="text-lg font-bold text-slate-900">Scan or Upload Image</p>
+                    <p className="text-slate-500 text-sm">Capture a photo of your document or drag & drop</p>
                   </div>
                 </div>
-                <div className="space-y-1">
-                  <p className="text-lg font-bold text-slate-900">Scan or Upload Image</p>
-                  <p className="text-slate-500 text-sm">Capture a photo of your document or drag & drop</p>
-                  <p className="text-[10px] text-slate-400 mt-2 italic">Note: Camera access requires browser permission.</p>
+
+                {/* Scrollable Actions */}
+                <div className="p-6 pt-4 space-y-6 flex flex-col items-center justify-center flex-1">
+                  <p className="text-[10px] text-slate-400 italic">Note: Camera access requires browser permission.</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full max-w-xs sm:max-w-none">
+                    <button
+                      onClick={startCamera}
+                      className="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2 shadow-md"
+                    >
+                      <Camera className="w-4 h-4" />
+                      Use Camera
+                    </button>
+                    <button
+                      onClick={() => fileInputRef.current?.click()}
+                      className="w-full sm:w-auto px-6 py-2.5 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    >
+                      <Upload className="w-4 h-4" />
+                      Browse Files
+                    </button>
+                  </div>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    className="hidden"
+                  />
                 </div>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full">
-                  <button
-                    onClick={startCamera}
-                    className="w-full sm:w-auto px-6 py-2.5 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Camera className="w-4 h-4" />
-                    Use Camera
-                  </button>
-                  <button
-                    onClick={() => fileInputRef.current?.click()}
-                    className="w-full sm:w-auto px-6 py-2.5 bg-white text-slate-700 border border-slate-200 rounded-xl font-bold text-sm hover:bg-slate-50 transition-colors flex items-center justify-center gap-2"
-                  >
-                    <Upload className="w-4 h-4" />
-                    Browse Files
-                  </button>
-                </div>
-                <input
-                  type="file"
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  accept="image/*"
-                  className="hidden"
-                />
               </div>
             )}
             <canvas ref={canvasRef} className="hidden" />
@@ -376,7 +383,7 @@ export default function Scanner() {
             </button>
           </div>
 
-         
+           
         </div>
       </div>
     </div>
