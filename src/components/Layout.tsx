@@ -72,7 +72,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* Footer (Desktop) */}
       <footer className="hidden md:block py-8 border-t border-slate-200 mt-auto">
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center text-slate-500 text-sm">
-          <p>© 2026 SmartScan AI. Powered by Gemini 1.5 Flash.</p>
+          <p>© 2026 SmartScan AI.</p>
           <div className="flex gap-4">
             <Link to="#" className="hover:text-indigo-600">Privacy</Link>
             <Link to="#" className="hover:text-indigo-600">Terms</Link>

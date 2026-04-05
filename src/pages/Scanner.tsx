@@ -376,14 +376,7 @@ export default function Scanner() {
             </button>
           </div>
 
-          <div className="p-6 bg-indigo-50 rounded-[2rem] border border-indigo-100">
-            <div className="flex gap-3">
-              <ImageIcon className="w-5 h-5 text-indigo-600 flex-shrink-0" />
-              <p className="text-xs text-indigo-900/70 leading-relaxed">
-                <span className="font-bold text-indigo-900">Pro Tip:</span> For best results, ensure the text is well-lit and the image is not blurry. Gemini handles handwriting exceptionally well!
-              </p>
-            </div>
-          </div>
+         
         </div>
       </div>
     </div>

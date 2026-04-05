@@ -90,32 +90,7 @@ export default function Home() {
         ))}
       </section>
 
-      {/* Why SmartScan? */}
-      <section className="bg-slate-900 rounded-[3rem] p-8 md:p-16 text-white overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-600/20 blur-[100px] rounded-full -mr-32 -mt-32"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-600/20 blur-[100px] rounded-full -ml-32 -mb-32"></div>
-        
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
-            <h2 className="text-3xl md:text-4xl font-bold">Why choose SmartScan AI?</h2>
-            <div className="space-y-4">
-              {[
-                "Handles complex handwriting with ease",
-                "Preserves original document formatting",
-                "Multilingual support (100+ languages)",
-                "Fast processing with Gemini 1.5 Flash",
-                "Privacy-first: No permanent storage of images"
-              ].map((item) => (
-                <div key={item} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-indigo-400 w-5 h-5 flex-shrink-0" />
-                  <span className="text-slate-300">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-        </div>
-      </section>
+      
     </div>
   );
 }
